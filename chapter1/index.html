@@ -1,0 +1,59 @@
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Vue 3 Movie List</title>
+	<script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+	<div id="app">
+		<h1>Best Movies List</h1>
+		<ol>
+			<li v-for="movie in movies">
+				<button v-on:click="makeFavorite(movie.title)">Make Favorite</button>
+				<h2>{{ movie.title }}</h2>
+				<p>Year: {{ movie.year }}</p>
+				<p>Main Cast:</p>
+				<ul>
+					<li v-for="castMember in movie.mainCast">{{castMember}}
+						<button v-on:click="AddToFavoriteCastMemberList(castMember)">Add to favorite list</button>
+					</li>
+				</ul>
+				<p v-if="movie.genre">Genre: {{ movie.genre }}</p>
+				<p v-else>Genre: Not Specified</p>
+			</li>
+		</ol>
+		<hr>
+		<h1>Favorite Movie</h1>
+		<p>{{ favoriteMovie }}</p>
+		<hr>
+		<h1>Favorite Cast Members</h1>
+		<p>{{ favoriteCastMembers }}</p>
+	</div>
+	<script>
+		const { createApp } = Vue
+		const app = createApp({
+			data() {
+				return {
+					movies: [
+						{ title: 'Warlock', year: 1989, mainCast: ['Julian Sands', 'Lori Singer', 'Richard E. Grant'], genre: 'Horror' },
+						{ title: 'The Gate', year: 1987, mainCast: ['Stephen Dorff', 'Christa Denton', 'Louis Tripp'], genre: 'Horror' },
+						{ title: 'Critters', year: 1986, mainCast: ['Dee Wallace', 'M. Emmet Walsh', 'Billy Green Bush'], genre: null }
+					],
+					favoriteMovie: '',
+					favoriteCastMembers: []
+				}
+			},
+			methods: {
+				makeFavorite(title) {
+					this.favoriteMovie = title
+				},
+				AddToFavoriteCastMemberList(castMember) {
+					this.favoriteCastMembers.push(castMember)
+				}
+			},
+		})
+		app.mount('#app')
+	</script>
+</body>
+</html>
